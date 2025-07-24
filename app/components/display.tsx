@@ -15,7 +15,7 @@ interface DrumMachineGridProps {
   sections: number;
 }
 
-const DrumMachineGrid: React.FC<DrumMachineGridProps> = ({ instruments, steps, grid, currentStep, onToggle, sectionLength, sections }) => {
+const DrumMachineGrid: React.FC<DrumMachineGridProps> = ({ instruments, steps, grid, currentStep, onToggle, sectionLength}) => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragValue, setDragValue] = useState<boolean | null>(null);
   const [lastDraggedCell, setLastDraggedCell] = useState<{ row: number; col: number } | null>(null);
@@ -76,7 +76,7 @@ const DrumMachineGrid: React.FC<DrumMachineGridProps> = ({ instruments, steps, g
                   const isActive = grid[rowIdx][colIdx];
                   const isCurrent = colIdx === currentStep;
                   const isDownbeat = colIdx % sectionLength === 0;
-                  let background = isActive
+                  const background = isActive
                     ? (isCurrent ? "#1976d2" : "#000")
                     : (isCurrent ? "#b3d8f7" : (isDownbeat ? "#bdbdbd" : "#fff"));
                   return (
