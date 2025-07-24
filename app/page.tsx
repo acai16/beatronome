@@ -6,7 +6,6 @@ import BpmDisplay from "./components/bpmdisplay";
 import TimeSignatureSelector from "./components/time";
 
 const DEFAULT_BPM = 120;
-const DEFAULT_TIME_SIGNATURE = "4/4";
 const INSTRUMENTS = [
   { name: "Kick", file: "/kick.mp3" },
   { name: "Snare", file: "/snare.wav" },
