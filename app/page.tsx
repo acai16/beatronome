@@ -30,6 +30,10 @@ export default function Home() {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
 
+  // Web Audio API context and buffers
+  const audioContext = useRef<AudioContext | null>(null);
+  const [buffers, setBuffers] = useState<{ [name: string]: AudioBuffer }>({});
+
   // Get section info from map
   const { sections, stepsPerSection } = TIME_SIGNATURE_MAP[timeSignature as keyof typeof TIME_SIGNATURE_MAP] || { sections: 4, stepsPerSection: 4 };
   const steps = sections * stepsPerSection;
@@ -40,6 +44,28 @@ export default function Home() {
       .fill(0)
       .map(() => Array(steps).fill(false))
   );
+
+  // Setup AudioContext and preload buffers
+  useEffect(() => {
+    const AudioCtx = window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    audioContext.current = new AudioCtx();
+    const ctx = audioContext.current;
+    let isMounted = true; 
+    const loadBuffers = async () => {
+      const newBuffers: { [name: string]: AudioBuffer } = {};
+      for (const inst of INSTRUMENTS) {
+        const res = await fetch(inst.file);
+        const arrayBuffer = await res.arrayBuffer();
+        newBuffers[inst.name] = await ctx.decodeAudioData(arrayBuffer);
+      }
+      if (isMounted) setBuffers(newBuffers);
+    };
+    loadBuffers();
+    return () => {
+      isMounted = false;
+      ctx.close();
+    };
+  }, []);
 
   // Reset grid if steps change
   useEffect(() => {
@@ -69,17 +95,20 @@ export default function Home() {
     };
   }, [playing, bpm, sliderActive, steps]);
 
-  // Play sounds on step change
+  // Play sounds on step change using Web Audio API
   useEffect(() => {
     if (!playing) return;
+    const ctx = audioContext.current;
+    if (!ctx) return;
     INSTRUMENTS.forEach((inst, row) => {
-      if (grid[row][currentStep]) {
-        const audio = new Audio(inst.file);
-        audio.currentTime = 0;
-        audio.play();
+      if (grid[row][currentStep] && buffers[inst.name]) {
+        const source = ctx.createBufferSource();
+        source.buffer = buffers[inst.name];
+        source.connect(ctx.destination);
+        source.start();
       }
     });
-  }, [currentStep, playing, grid]);
+  }, [currentStep, playing, grid, buffers]);
 
   // Keyboard controls
   useEffect(() => {
