@@ -172,7 +172,9 @@ export default function Home() {
         <div style={{ width: 1600, margin: "0 auto", position: "relative" }}>
           {/* App name box top left */}
           <div style={{ position: "absolute", top: 0, left: 0, background: "#fff8ec", border: "2px solid #000", borderRadius: 12, padding: "1rem 1.5rem", minHeight: 48, boxShadow: "0 2px 8px #b0b0b033", zIndex: 1000, fontWeight: 900, fontSize: "2rem", letterSpacing: 1 }}>
-            beatronome: no bs drum machine
+            <h1 style={{ fontWeight: 900, fontSize: "2rem", letterSpacing: 1, margin: 0 }}>
+              beatronome: no bs drum machine
+            </h1>
           </div>
           <div style={{ position: "absolute", top: 0, right: 0, background: "#fff8ec", border: "2px solid #000", borderRadius: 12, padding: "1rem 1.5rem", minHeight: 48, boxShadow: "0 2px 8px #b0b0b033", zIndex: 1000, fontWeight: 500 }}>
             <span style={{ fontWeight: 700, fontSize: "1.3rem", letterSpacing: 1 }}>
