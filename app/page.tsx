@@ -172,7 +172,7 @@ export default function Home() {
         rel="icon"
         href="/icon.png"
         type="image/png"
-        sizes="32x32"
+        sizes="48x48"
         />
       <main style={{ minWidth: 1600, minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
         <div style={{ width: 1600, margin: "0 auto", position: "relative" }}>
