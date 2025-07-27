@@ -168,6 +168,12 @@ export default function Home() {
 
   return (
     <div style={{ width: "100vw", minHeight: "100vh", overflow: "auto", WebkitOverflowScrolling: "touch", background: "#b3d8f7" }}>
+      <link
+        rel="icon"
+        href="/icon.png"
+        type="image/png"
+        sizes="32x32"
+        />
       <main style={{ minWidth: 1600, minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
         <div style={{ width: 1600, margin: "0 auto", position: "relative" }}>
           {/* App name box top left */}
